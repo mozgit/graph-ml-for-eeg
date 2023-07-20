@@ -22,7 +22,10 @@ class OurDataset(Dataset):
 
     @property
     def processed_file_names(self):
-        return list((Path(self.root) / "processed").iterdir())
+        print("Processed files: " + str(Path(self.root) / "processed"))
+        files = list((Path(self.root) / "processed").iterdir())
+        print(str(files))
+        return files
 
     def download(self):
         # Download to `self.raw_dir`.
