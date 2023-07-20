@@ -95,8 +95,8 @@ def train_val_test_split(kfold = 5, fold = 0):
 
 
 dataset = OurDataset(path, name)
-dataset.data.y = dataset.data.y.squeeze()
-dataset.data.x[dataset.data.x == float('inf')] = 0
+# dataset.data.y = dataset.data.y.squeeze()
+# dataset.data.x[dataset.data.x == float('inf')] = 0
 
 tr_index,val_index,te_index = train_val_test_split(fold=fold)
 train_dataset = dataset[tr_index]
