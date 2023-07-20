@@ -44,9 +44,6 @@ class OurDataset(Dataset):
         return '{}({})'.format(self.name, len(self))
 
     def read_data(self):
-        pseudo = []
-        y_list = []
-        edge_att_list, edge_index_list, att_list = [], [], []
 
         file = open(self.raw_dir + "/parsed_data.pkl", 'rb')
         corrs = pickle.load(file)
@@ -55,7 +52,7 @@ class OurDataset(Dataset):
         file = open(self.raw_dir + "/parsed_data_nm2_gender.pkl", 'rb')
         pcorrs = pickle.load(file)
         file.close()
-        data = []
+
         for i, t in enumerate(zip(corrs, pcorrs)):
             corr, pcorr = t
             assert corr["gender"] == pcorr["gender"]
@@ -78,14 +75,6 @@ class OurDataset(Dataset):
             edge_index = edge_index.long()
             edge_index, edge_att = coalesce(edge_index, edge_att, num_nodes,
                                             num_nodes)
-
-            # =====
-            edge_att_list.append(edge_att.data.numpy())
-            edge_index_list.append(edge_index.data.numpy() + i * num_nodes)
-            att_list.append(corr)
-            y_list.append(np.array(y))
-            # TODO: must be tensor!!
-            pseudo.append(np.diag(np.ones(num_nodes)))
 
             data = Data(x=torch.from_numpy(corr).float(), edge_index=edge_index, y=torch.from_numpy(np.array(y)).long(),
                         edge_attr=edge_att.float(), pos=torch.from_numpy(np.diag(np.ones(num_nodes))).float())
