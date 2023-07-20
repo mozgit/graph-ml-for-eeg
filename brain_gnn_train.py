@@ -67,8 +67,8 @@ writer = SummaryWriter(os.path.join('./log', str(fold)))
 ################## Define Dataloader ##################################
 
 def train_val_test_split(n_sub, kfold = 5, fold = 0):
+    n_sub = 1002
     id = list(range(n_sub))
-
     import random
     random.seed(123)
     random.shuffle(id)
