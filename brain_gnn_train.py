@@ -66,8 +66,7 @@ writer = SummaryWriter(os.path.join('./log', str(fold)))
 
 ################## Define Dataloader ##################################
 
-def train_val_test_split(kfold = 5, fold = 0):
-    n_sub = 300
+def train_val_test_split(n_sub, kfold = 5, fold = 0):
     id = list(range(n_sub))
 
     import random
@@ -98,7 +97,7 @@ dataset = OurDataset(path, name)
 # dataset.data.y = dataset.data.y.squeeze()
 # dataset.data.x[dataset.data.x == float('inf')] = 0
 
-tr_index,val_index,te_index = train_val_test_split(fold=fold)
+tr_index,val_index,te_index = train_val_test_split(len(dataset), fold=fold)
 train_dataset = dataset[tr_index]
 val_dataset = dataset[val_index]
 test_dataset = dataset[te_index]
